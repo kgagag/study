@@ -14,4 +14,17 @@
     from user
     where username = #{username,jdbcType=VARCHAR}
   </select>
+  
+     <!-- 插入数据 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user (
+            username ,
+            password 
+          
+        ) VALUES (
+            #{username} ,
+            #{password} 
+        )
+    </insert>
+  
 </mapper>
