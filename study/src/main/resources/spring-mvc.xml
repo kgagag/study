@@ -21,7 +21,7 @@
 			<bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter" />
 			<bean class="org.springframework.http.converter.FormHttpMessageConverter" />
 			<bean class="org.springframework.http.converter.xml.SourceHttpMessageConverter" />
-			<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
+<!-- 			<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" /> -->
 		</mvc:message-converters>
 	</mvc:annotation-driven>
 	    
