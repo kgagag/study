@@ -7,7 +7,7 @@
 <title></title>
 </head>
 <body>
-<form action="../test/dologin.do" method="post">
+<form action="./login/dologin.json" method="post">
 <table>
 	<tr>
 		<td><label>用户名</label></td>
