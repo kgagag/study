@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gray.user.dao.UserDao;
+import com.gray.user.entity.PayVO;
 import com.gray.user.entity.User;
 import com.gray.user.service.UserService;
 
@@ -31,5 +32,9 @@ public class UserServiceImpl implements UserService {
 
     public void insert(User user) {
         this.dao.insert(user);
+    }
+
+    public List<PayVO> getPay(int time) {
+        return this.dao.getPay(time);
     }
 }

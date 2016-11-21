@@ -1,0 +1,149 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content='text/html;charset=utf-8' http-equiv='content-type'>
+ <title>Echarts图表Demo</title>
+ <script src="js/esl/esl.js"></script>
+  <script src="js/jquery-1.3.1.js"></script>
+</head>
+
+<body>
+
+<div id="line" style="width:1800px;height:600px;">  </div>
+ <script type="text/javascript">
+
+ var fileLocation ='js/echarts';
+require.config({
+   
+    paths:{ 
+          echarts: fileLocation,
+            'echarts/chart/line': fileLocation,
+            'echarts/chart/bar': fileLocation,
+            'echarts/chart/pie': fileLocation
+    }
+});
+
+// 作为入口
+require(
+    [
+        'echarts',
+        'echarts/chart/line'
+    ], 
+	
+	displayChart
+    
+);
+
+function displayChart(ec) {
+         //折线图
+        var lineChart = ec.init(document.getElementById('line'));
+		var lineChartOtion = new getLineChartOption();	
+		
+		var xArr=new Array();
+		var yArr=new Array();
+			$.ajax({
+            type: "GET",
+              // 提交类型
+            dataType: "json",
+            async: false,
+            url: 'http://localhost:8080/study/login/getpay.json',
+            success: function(data) {
+                for(var i=0;i<data.length;i++){//.replace(/:\d{1,2}$/,' ')
+                      //  xArr.push(new Date(parseInt(data[i].time) * 1000).toLocaleString());
+                        xArr.push(data[i].time);
+
+                        yArr.push(data[i].total);
+                    }
+                
+			}
+       }); 
+		
+		lineChartOtion.xAxis=[
+        {
+            type : 'category',
+            boundaryGap : false,
+            data : xArr
+        }
+    ];
+	
+	lineChartOtion.series=
+	[
+        {
+            name:'成交额',
+            type:'line',
+            itemStyle: {
+                normal: {
+                    lineStyle: {
+                        shadowColor : 'rgba(0,0,0,0.4)'
+                    }
+                }
+            },
+            data:yArr
+        }
+    ]
+	
+        lineChart.setOption(lineChartOtion);
+    }
+
+	//获得Line图的选项和数据
+	function getLineChartOption(){
+	var lineChartOption={
+    title : {
+        text: '珍品网双11成交额数据直播',
+       // subtext: '纯属虚构'
+    },
+    tooltip : {
+        trigger: 'axis'
+    },
+    legend: {
+        data:['成交额']
+    },
+    toolbox: {
+        show : true,
+        feature : {
+            mark : true,
+            dataView : {readOnly: false},
+            magicType:['line', 'bar'],
+            restore : true,
+            saveAsImage : true
+        }
+    },
+    calculable : true,
+    xAxis : [
+        {
+            type : 'category',
+            boundaryGap : false,
+            data : ['周一','周二','周三','周四','周五','周六','周日','周日']
+        }
+    ],
+    yAxis : [
+        {
+		    show : false,
+            type : 'value',
+            axisLabel : {
+                formatter: '{value} 元'
+            },
+            splitArea : {show : true}
+        }
+    ],
+    series : [
+        {
+            name:'成交额',
+            type:'line',
+            itemStyle: {
+                normal: {
+                    lineStyle: {
+                        shadowColor : 'rgba(0,0,0,0.4)'
+                    }
+                }
+            },
+            data:[0]
+        }
+    ]
+};
+return lineChartOption;
+	}
+
+</script>
+</body>
+</html>

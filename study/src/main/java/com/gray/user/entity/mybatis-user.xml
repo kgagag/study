@@ -5,6 +5,12 @@
 		<result column="username" property="username" />
 		<result column="password" property="password" />
 	</resultMap>
+	
+	<resultMap id="payResultMap" type="com.gray.user.entity.PayVO">
+        <result column="money" property="money" />
+        <result column="time" property="time" />
+    </resultMap>
+	
   <sql id="Base_Column_List" >
     username, password
   </sql>
@@ -26,5 +32,16 @@
             #{password} 
         )
     </insert>
+  
+  
+  <select id="getPay" resultMap="payResultMap" >
+    select 
+      use_online_payed money,
+      create_time time
+        from gt_orders
+        where create_time &gt;  #{time}
+        and pay_status=1
+        order by create_time desc
+  </select>
   
 </mapper>
